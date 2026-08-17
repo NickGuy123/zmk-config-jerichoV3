@@ -1,0 +1,10 @@
+if SHIELD_JERICHO
+
+config ZMK_KEYBOARD_NAME
+    default "Jericho V3"
+
+# Unibody board (single nice!nano, no BLE split), safe default:
+config ZMK_SPLIT
+    default n
+
+endif # SHIELD_JERICHO

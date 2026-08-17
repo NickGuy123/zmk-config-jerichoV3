@@ -1,0 +1,7 @@
+# Add an entry like this to the build.yaml at the ROOT of your zmk-config
+# repo (create it if it doesn't exist) so GitHub Actions builds firmware
+# for you automatically:
+
+include:
+  - board: nice_nano_v2
+    shield: jericho
