@@ -6,6 +6,19 @@
  * Pin mapping and matrix population were traced directly from the KiCad
  * schematic (Jericho_V3), diode-by-diode. See README.md in this folder
  * for the full derivation notes.
+ *
+ * NOTE: col0, col6, col7, col8 were corrected from the schematic's literal
+ * pin labels (14,15,16,17) to the real nice!nano silkscreen numbers
+ * (10,16,14,15). The schematic's KiCad symbol numbered that section of the
+ * right header sequentially (18,17,16,15,14), but the real nice!nano
+ * silkscreen is non-sequential there (18,15,14,16,10) and has no pin 17 at
+ * all - confirmed against ZMK's actual gpio-map source. See README.md.
+ *
+ * NOTE 2: row-gpios carry GPIO_PULL_DOWN. Columns are driven as outputs
+ * during scanning so they're never floating, but rows are pure inputs -
+ * without an internal pull-down a row with no switch currently closing it
+ * floats and can read as randomly "pressed" from noise, which shows up as
+ * phantom key presses (especially obvious with most switches unpopulated).
  */
 
 #include <dt-bindings/gpio/gpio.h>
@@ -23,23 +36,23 @@
         diode-direction = "col2row";
 
         row-gpios
-            = <&pro_micro 3 GPIO_ACTIVE_HIGH>  /* row0 */
-            , <&pro_micro 2 GPIO_ACTIVE_HIGH>  /* row1 */
-            , <&pro_micro 0 GPIO_ACTIVE_HIGH>  /* row2 */
-            , <&pro_micro 1 GPIO_ACTIVE_HIGH>  /* row3 */
-            , <&pro_micro 4 GPIO_ACTIVE_HIGH>  /* row4 (thumbs) */
+            = <&pro_micro 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* row0 */
+            , <&pro_micro 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* row1 */
+            , <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* row2 */
+            , <&pro_micro 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* row3 */
+            , <&pro_micro 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* row4 (thumbs) */
             ;
 
         col-gpios
-            = <&pro_micro 10 GPIO_ACTIVE_HIGH>  /* col0  */
+            = <&pro_micro 10 GPIO_ACTIVE_HIGH>  /* col0  (corrected from 14) */
             , <&pro_micro 9  GPIO_ACTIVE_HIGH>  /* col1  */
             , <&pro_micro 8  GPIO_ACTIVE_HIGH>  /* col2  */
             , <&pro_micro 7  GPIO_ACTIVE_HIGH>  /* col3  */
             , <&pro_micro 6  GPIO_ACTIVE_HIGH>  /* col4  */
             , <&pro_micro 5  GPIO_ACTIVE_HIGH>  /* col5  */
-            , <&pro_micro 16 GPIO_ACTIVE_HIGH>  /* col6  */
-            , <&pro_micro 14 GPIO_ACTIVE_HIGH>  /* col7  */
-            , <&pro_micro 15 GPIO_ACTIVE_HIGH>  /* col8  */
+            , <&pro_micro 16 GPIO_ACTIVE_HIGH>  /* col6  (corrected from 15) */
+            , <&pro_micro 14 GPIO_ACTIVE_HIGH>  /* col7  (corrected from 16) */
+            , <&pro_micro 15 GPIO_ACTIVE_HIGH>  /* col8  (corrected from 17) */
             , <&pro_micro 18 GPIO_ACTIVE_HIGH>  /* col9  */
             , <&pro_micro 19 GPIO_ACTIVE_HIGH>  /* col10 */
             , <&pro_micro 20 GPIO_ACTIVE_HIGH>  /* col11 */
